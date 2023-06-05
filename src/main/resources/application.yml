@@ -9,6 +9,9 @@ spring:
     password: jimkwon
   # JPA ??
   jpa:
-#    show-sql: false
+    show-sql: false
     hibernate:
       ddl-auto: validate
+
+jwt:
+  secret: jimkwon

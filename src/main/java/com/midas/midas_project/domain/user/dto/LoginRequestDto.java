@@ -1,15 +1,12 @@
 package com.midas.midas_project.domain.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserLoginDto {
+public class LoginRequestDto {
     private String userId;
     private String password;
 }

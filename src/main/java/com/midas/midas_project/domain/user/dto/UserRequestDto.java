@@ -12,8 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class UserRequestDto {
     private String userName;
+    private String midasUserId;
     private String team;
     private String password;
     private String phone;
+    private String role;
     List<String> userRoles; // 차후에 ENUM을 통해 role 관리
 }

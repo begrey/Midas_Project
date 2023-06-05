@@ -28,4 +28,5 @@ public class UserRole extends BaseEntity {
     @Comment("유저 아이디")
     private User user;
 
+
 }

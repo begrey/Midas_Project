@@ -1,24 +1,24 @@
 package com.midas.midas_project.domain.user;
 
-import com.midas.midas_project.domain.user.dto.UserLoginDto;
+import com.midas.midas_project.domain.user.dto.LoginRequestDto;
+import com.midas.midas_project.domain.user.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@RequestMapping(value = "/login")
 @RestController
+@RequestMapping(value = "/users")
 public class LoginController {
+
+    private final LoginService loginService;
     @PostMapping("/login")
-    public void login(UserLoginDto userLoginDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        JwtResponseDto jwt = loginService.login(userSignInDto);
-//        setCookieAndRedirectMain(jwt, request, response);
+    public LoginResponseDto login(@RequestBody LoginRequestDto userLoginDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LoginResponseDto dto = loginService.login(userLoginDto);
+        return dto;
     }
 
     @GetMapping("/logout")
@@ -36,6 +36,6 @@ public class LoginController {
 //        }
 //        else
 //            return "login/login";
-        return "redirect:/main";
+        return "logout successed";
     }
 }
