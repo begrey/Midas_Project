@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,5 +29,10 @@ public class UserRole extends BaseEntity {
     @Comment("유저 아이디")
     private User user;
 
-
+    public static UserRole toEntity (User user, String url) {
+        return UserRole.builder()
+                .url(url)
+                .user(user)
+                .build();
+    }
 }

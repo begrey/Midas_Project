@@ -2,40 +2,53 @@ package com.midas.midas_project.domain.user;
 
 import com.midas.midas_project.domain.user.dto.UserRequestDto;
 import com.midas.midas_project.domain.user.dto.UserResponseDto;
+import com.midas.midas_project.domain.userlog.UserLogService;
+import com.midas.midas_project.domain.userlog.dto.UserLogDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping(value = "/admin/users")
+@RequestMapping(value = "/admin")
 @RestController
 public class UserController {
 
     private final UserService userService;
+    private final UserLogService userLogService;
 
-    @PostMapping
-    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.saveUser(userRequestDto);
+    @PostMapping("/users")
+    public UserResponseDto createUser(@RequestBody UserRequestDto.Post post) {
+        return userService.saveUser(post);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/users/{userId}")
     public UserResponseDto getUser(@PathVariable Long userId) {
         return userService.selectUser(userId);
     }
 
-    @GetMapping
-    public List<UserResponseDto> getUserList() {
-        return userService.selectUserList();
+    @GetMapping("/users")
+    public List<UserResponseDto> getUserList(Pageable pageable) {
+        return userService.selectUserList(pageable);
     }
 
-    @PutMapping("/{userId}")
-    public UserResponseDto updateUser(@PathVariable long userId, @RequestBody UserRequestDto userRequestDto) {
-        return userService.updateUser(userId, userRequestDto);
+    @PutMapping("/users/{userId}")
+    public UserResponseDto updateUser(@PathVariable long userId, @RequestBody UserRequestDto.Put update) {
+        return userService.updateUser(userId, update);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/users/{userId}")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
+    }
+
+    @GetMapping("/logs")
+    public List<UserLogDto> getUserLogList(Pageable pageable) {
+        return userLogService.selectUserLogList(pageable);
+    }
+    @GetMapping("/logs/search")
+    public List<UserLogDto> SearchUserLogListByUserId(Pageable pageable, @RequestParam("id") String midasUserId) {
+        return userLogService.searchUserLogListById(pageable, midasUserId);
     }
 }

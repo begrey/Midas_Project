@@ -15,3 +15,6 @@ spring:
 
 jwt:
   secret: jimkwon
+
+file:
+  uploadDir=${user.home}/files

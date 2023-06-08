@@ -2,12 +2,14 @@ package com.midas.midas_project.domain.user;
 
 import com.midas.midas_project.domain.user.dto.LoginRequestDto;
 import com.midas.midas_project.domain.user.dto.LoginResponseDto;
+import com.midas.midas_project.domain.userlog.UserLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,9 +17,18 @@ import java.io.IOException;
 public class LoginController {
 
     private final LoginService loginService;
+
+    private final UserLogService userLogService;
     @PostMapping("/login")
     public LoginResponseDto login(@RequestBody LoginRequestDto userLoginDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginResponseDto dto = loginService.login(userLoginDto);
+        LoginResponseDto dto = null;
+        boolean loginSuccess = true;
+        try {
+            dto = loginService.login(userLoginDto, request);
+        } catch (Exception e) {
+            loginSuccess = false;
+        }
+        userLogService.createUserLog(request, userLoginDto.getUserId(), loginSuccess);
         return dto;
     }
 

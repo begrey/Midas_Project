@@ -1,5 +1,6 @@
 package com.midas.midas_project.domain.user;
 
+import com.midas.midas_project.domain.user.dto.UserRequestDto;
 import com.midas.midas_project.domain.user.dto.UserResponseDto;
 import com.midas.midas_project.model.BaseEntity;
 import lombok.*;
@@ -7,6 +8,8 @@ import org.hibernate.annotations.Comment;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -50,34 +53,25 @@ public class User extends BaseEntity {
     @Comment("권한")
     private String role;
 
-    public UserResponseDto toDto(User user) {
-        ModelMapper modelMapper = new ModelMapper(); // 빈 등록하여 관리
-        return modelMapper.map(user, UserResponseDto.class);
+    @Builder.Default
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @Column
+    private List<UserRole> userRoles = new ArrayList<>();
+
+    public void setUserRoles (List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
-// 리플렉션 제너럴 Tㅌ타입으로 받아서 원하는것만 한번에 수정하도록
-    public User patch(Map<String, Object> patchMap) {
-        for(Map.Entry<String,Object> entry : patchMap.entrySet()){
-            findKeyAndPatch(entry.getKey(), entry.getValue());
-        }
+
+
+
+// 리플렉션 제너럴 T타입으로 받아서 원하는것만 한번에 수정하도록
+    public User update(UserRequestDto.Put update) {
+        this.team = update.getTeam();
+        this.phone = update.getPhone();
+        this.role = update.getRole();
+        this.userName = update.getUserName();
         return this;
     }
 
-    public void findKeyAndPatch(String key, Object value) {
-        switch (key) {
-            case "userName":
-                this.userName = value.toString();
-                break;
-            case "team":
-                this.team = value.toString();
-                break;
-            case "phone":
-                this.phone = value.toString();
-                break;
-            case "userRoles":
-                    break;
-            default:
-                throw new IllegalArgumentException("해당 column이 없습니다." + key);
-        }
-    }
 
 }

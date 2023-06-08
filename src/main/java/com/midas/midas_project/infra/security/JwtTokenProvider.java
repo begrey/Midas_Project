@@ -29,7 +29,7 @@ public class JwtTokenProvider {
 
     private final CustomUserDetailService userDetailService;
 
-    private final UserRoleService userRoleService;
+    private final UserRoleRepository userRoleRepository;
 
     private final UserRepository userRepository;
 
@@ -96,7 +96,7 @@ public class JwtTokenProvider {
         Claims claims = getAllClaimsFromToken(token);
         UserDetails userDetails = userDetailService.loadUserByUsername(this.getUsernameFromToken(token));
         User user = userRepository.findByMidasUserIdAndPassword(userDetails.getUsername(), userDetails.getPassword());
-        List<String> userRoleList = userRoleService.selectUserRoleUrlList(user.getUserId());
+        List<String> userRoleList = userRoleRepository.findByUserUserId(user.getUserId()).stream().map(role -> role.getUrl()).toList();
         return new UsernamePasswordAuthenticationToken(userDetails, userRoleList, userDetails.getAuthorities());
     }
 

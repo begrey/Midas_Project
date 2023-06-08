@@ -1,10 +1,5 @@
 package com.midas.midas_project.infra.security;
 
-import com.midas.midas_project.domain.user.User;
-import com.midas.midas_project.domain.user.UserRepository;
-import com.midas.midas_project.domain.user.UserRole;
-import com.midas.midas_project.domain.user.UserRoleService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +14,8 @@ import java.util.List;
 public class AuthorizationChecker {
 
     public boolean check(HttpServletRequest request, Authentication authentication) {
-        Object principalObj = authentication.getPrincipal();
-        UserDetails userDetails = (UserDetails) principalObj;
+//        Object principalObj = authentication.getPrincipal();
+//        UserDetails userDetails = (UserDetails) principalObj;
 
         List<String> roleUrlList = (List<String>) authentication.getCredentials();
         for(String url : roleUrlList) {
