@@ -1,5 +1,6 @@
 package com.midas.midas_project.domain.employment;
 
+import com.midas.midas_project.domain.employment.dto.EmploymentRequestDto;
 import com.midas.midas_project.domain.user.UserRole;
 import com.midas.midas_project.model.BaseEntity;
 import lombok.*;
@@ -39,6 +40,10 @@ public class Employment extends BaseEntity {
     @Comment("자격요건")
     private String qualification;
 
+    @Column(name = "is_visible", nullable = false)
+    @Comment("노출여부")
+    private String isVisible;
+
     @Column(name = "recruit_start_datetime")
     @Comment("채용시작일")
     private LocalDateTime recruitStartDatetime;
@@ -47,7 +52,21 @@ public class Employment extends BaseEntity {
     @Comment("채용종료일")
     private LocalDateTime recruitEndDatetime;
 
-    @OneToMany(mappedBy = "employment", fetch = FetchType.LAZY)
-    @Column
-    private List<EmploymentFile> employmentFiles = new ArrayList<>();
+    @OneToOne(mappedBy = "employment", fetch = FetchType.LAZY)
+    private EmploymentFile employmentFile;
+
+    public void setEmploymentFiles(EmploymentFile employmentFile) {
+        this.employmentFile = employmentFile;
+    }
+
+    public Employment update (EmploymentRequestDto.Put update) {
+        this.position = update.getPosition();
+        this.occupation = update.getOccupation();
+        this.assignedTask = update.getAssignedTask();
+        this.qualification = update.getQualification();
+        this.recruitStartDatetime = update.getRecruitStartDatetime();
+        this.recruitEndDatetime = update.getRecruitEndDatetime();
+        this.isVisible = update.getIsVisible();
+        return this;
+    }
 }

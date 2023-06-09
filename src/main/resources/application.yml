@@ -17,4 +17,4 @@ jwt:
   secret: jimkwon
 
 file:
-  uploadDir=${user.home}/files
+  uploadDir: ${user.home}/files

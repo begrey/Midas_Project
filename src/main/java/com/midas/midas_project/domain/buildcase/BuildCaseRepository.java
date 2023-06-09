@@ -1,4 +1,6 @@
 package com.midas.midas_project.domain.buildcase;
 
-public interface BuildCaseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BuildCaseRepository extends JpaRepository<BuildCase, Long> {
 }

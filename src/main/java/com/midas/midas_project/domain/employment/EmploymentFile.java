@@ -43,13 +43,13 @@ public class EmploymentFile extends BaseEntity {
     @Comment("파일 크기")
     private Long fileSize;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employment_id", foreignKey = @ForeignKey(name = "employment_file_ibfk_1"))
     @Comment("채용공고 아이디")
     private Employment employment;
 
 
-    public static EmploymentFile toEntity(MultipartFile file, String filePath) {
+    public static EmploymentFile toEntity(MultipartFile file, String filePath, Employment employment) {
         String filename = file.getOriginalFilename();
         return EmploymentFile.builder()
                 .filePath(filePath)
@@ -57,6 +57,7 @@ public class EmploymentFile extends BaseEntity {
                 .tempName(UUID.randomUUID().toString())
                 .extension(FilenameUtils.getExtension(filename))
                 .fileSize(file.getSize())
+                .employment(employment)
                 .build();
     }
 }

@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmploymentFileRepository extends JpaRepository<EmploymentFile, Long> {
+    void deleteByEmploymentEmploymentId(Long employmentId);
+    EmploymentFile findByEmploymentEmploymentId(Long employmentId);
 }

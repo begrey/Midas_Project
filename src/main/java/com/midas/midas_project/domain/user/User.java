@@ -64,7 +64,6 @@ public class User extends BaseEntity {
 
 
 
-// 리플렉션 제너럴 T타입으로 받아서 원하는것만 한번에 수정하도록
     public User update(UserRequestDto.Put update) {
         this.team = update.getTeam();
         this.phone = update.getPhone();

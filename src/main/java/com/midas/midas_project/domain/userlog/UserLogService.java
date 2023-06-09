@@ -21,10 +21,13 @@ public class UserLogService {
     private final ModelMapper modelMapper;
 
     public void createUserLog(HttpServletRequest request, String midasUserId, boolean loginSuccess) {
-        String sessionId = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("JSESSIONID"))
-                .map(cookie -> cookie.getValue())
-                .findFirst().orElse(null);
+        String sessionId = null;
+        if (request.getCookies() != null) {
+            sessionId = Arrays.stream(request.getCookies())
+                    .filter(cookie -> cookie != null && cookie.getName().equals("JSESSIONID"))
+                    .map(cookie -> cookie.getValue())
+                    .findFirst().orElse(null);
+        }
         String ipAddress = request.getRemoteAddr();
 
         userLogRepository.save(UserLog.of(midasUserId, ipAddress, sessionId, loginSuccess));

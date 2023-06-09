@@ -27,11 +27,11 @@ public class UserLog extends BaseEntity {
     @Comment("유저 아이디")
     private String midasUserId;
 
-    @Column(name = "ipAddress", nullable = false, length = 20)
+    @Column(name = "ipAddress", nullable = true, length = 20)
     @Comment("아이피 주소")
     private String ipAddress;
 
-    @Column(name = "session_id", nullable = false, length = 50)
+    @Column(name = "session_id", nullable = true, length = 50)
     @Comment("세션 아이디")
     private String sessionId;
 

@@ -1,5 +1,6 @@
 package com.midas.midas_project.domain.category;
 
+import com.midas.midas_project.domain.buildcase.BuildCase;
 import com.midas.midas_project.model.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -29,7 +30,11 @@ public class Category extends BaseEntity {
     @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "category_ibfk_1"))
     private Category parent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> child = new ArrayList<>();
+
+    @OneToOne(mappedBy = "category", fetch = FetchType.LAZY)
+    private BuildCase buildCase;
 
 }

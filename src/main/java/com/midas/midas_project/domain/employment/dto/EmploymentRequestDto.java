@@ -4,6 +4,7 @@ import com.midas.midas_project.domain.employment.Employment;
 import com.midas.midas_project.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -18,9 +19,11 @@ public class EmploymentRequestDto {
         private String occupation;
         private String assignedTask;
         private String qualification;
+        private String isVisible;
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private LocalDateTime recruitStartDatetime;
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private LocalDateTime recruitEndDatetime;
-        List<MultipartFile> employmentFiles; // 차후에 ENUM을 통해 role 관리
 
         public Employment toEntity() {
             return Employment.builder()
@@ -28,9 +31,22 @@ public class EmploymentRequestDto {
                     .occupation(this.occupation)
                     .assignedTask(this.assignedTask)
                     .qualification(this.qualification)
-                    .recruitEndDatetime(this.recruitStartDatetime)
+                    .isVisible(this.isVisible)
+                    .recruitStartDatetime(this.recruitStartDatetime)
                     .recruitEndDatetime(this.recruitEndDatetime)
                     .build();
         }
+    }
+
+    @Builder
+    @Getter
+    public static class Put {
+        private String position;
+        private String occupation;
+        private String assignedTask;
+        private String qualification;
+        private String isVisible;
+        private LocalDateTime recruitStartDatetime;
+        private LocalDateTime recruitEndDatetime;
     }
 }
