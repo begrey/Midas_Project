@@ -3,6 +3,7 @@ package com.midas.midas_project.domain.user;
 import com.midas.midas_project.domain.user.dto.LoginRequestDto;
 import com.midas.midas_project.domain.user.dto.LoginResponseDto;
 import com.midas.midas_project.domain.userlog.UserLogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Tag(name = "로그인/로그아웃 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/users")

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BuildCaseTableRepository extends JpaRepository<BuildCaseTable, Long> {
+    void deleteByBuildCaseBuildCaseId(Long buildCaseId);
 }

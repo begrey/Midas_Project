@@ -51,12 +51,17 @@ public class BuildCase extends BaseEntity {
     @Comment("구축사례 배너 아이디")
     private List<BuildCaseBanner> buildCaseBanners = new ArrayList<>();
 
-    public void setBuildCaseFilesFile(BuildCaseFile file) {
-        buildCaseFiles.add(file);
+    public void setBuildCaseFiles(BuildCaseFile file) {
+        if (this.buildCaseFiles == null)
+            this.buildCaseFiles = new ArrayList<>();
+        this.buildCaseFiles.add(file);
     }
 
 
-    public void setBanner() {
-
+    public void setBanner(List<BuildCaseBanner> banners) {
+        this.buildCaseBanners = banners;
+    }
+    public void setTable(List<BuildCaseTable> table) {
+        this.buildCaseTables = table;
     }
 }

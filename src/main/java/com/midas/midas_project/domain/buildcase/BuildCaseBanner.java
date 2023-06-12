@@ -42,4 +42,9 @@ public class BuildCaseBanner extends BaseEntity {
                 .buildCase(buildCase)
                 .build();
     }
+
+    public void setBuildCaseFile(BuildCaseFile buildCaseFile) {
+        this.buildCaseFile = buildCaseFile;
+    }
+
 }

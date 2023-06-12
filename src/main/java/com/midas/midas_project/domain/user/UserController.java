@@ -4,12 +4,14 @@ import com.midas.midas_project.domain.user.dto.UserRequestDto;
 import com.midas.midas_project.domain.user.dto.UserResponseDto;
 import com.midas.midas_project.domain.userlog.UserLogService;
 import com.midas.midas_project.domain.userlog.dto.UserLogDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "관리자 관리 API")
 @RequiredArgsConstructor
 @RequestMapping(value = "/admin")
 @RestController
@@ -43,12 +45,4 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    @GetMapping("/logs")
-    public List<UserLogDto> getUserLogList(Pageable pageable) {
-        return userLogService.selectUserLogList(pageable);
-    }
-    @GetMapping("/logs/search")
-    public List<UserLogDto> SearchUserLogListByUserId(Pageable pageable, @RequestParam("id") String midasUserId) {
-        return userLogService.searchUserLogListById(pageable, midasUserId);
-    }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BuildCaseFileService {
-    private BuildCaseFileRepository buildCaseFileRepository;
+    private final BuildCaseFileRepository buildCaseFileRepository;
 
     @Value("${file.uploadDir}")
     private String filePath;
@@ -40,8 +40,8 @@ public class BuildCaseFileService {
         buildCaseFileRepository.deleteByBuildCaseBuildCaseId(buildCase.getBuildCaseId());
     }
 
-    public void deleteBuildCaseFileById(Long employmentId) {
-        buildCaseFileRepository.deleteByBuildCaseBuildCaseId(employmentId);
+    public void deleteBuildCaseFileById(Long buldCaseId) {
+        buildCaseFileRepository.deleteByBuildCaseBuildCaseId(buldCaseId);
     }
 
     public String uploadFile(MultipartFile file) throws IOException {

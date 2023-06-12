@@ -3,6 +3,7 @@ package com.midas.midas_project.domain.user.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.midas.midas_project.domain.user.User;
 import com.midas.midas_project.domain.user.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "관리자 관리 응답 객체")
 public class UserResponseDto{
     private Long userId;
     private String userName;

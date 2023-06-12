@@ -2,6 +2,7 @@ package com.midas.midas_project.domain.user.dto;
 
 import com.midas.midas_project.domain.user.User;
 import com.midas.midas_project.domain.user.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
+@Schema(description = "관리자 관리 요청 객체")
 public class UserRequestDto {
 
     @Builder

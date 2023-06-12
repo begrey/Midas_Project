@@ -1,5 +1,6 @@
 package com.midas.midas_project.domain.buildcase;
 
+import com.midas.midas_project.domain.buildcase.dto.BuildcaseResponseDto;
 import com.midas.midas_project.model.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -40,4 +41,5 @@ public class BuildCaseTable extends BaseEntity {
                 .buildCase(buildCase)
                 .build();
     }
+
 }

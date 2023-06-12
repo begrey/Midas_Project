@@ -1,17 +1,12 @@
 package com.midas.midas_project.domain.employment.dto;
 
 import com.midas.midas_project.domain.employment.Employment;
-import com.midas.midas_project.domain.employment.EmploymentFile;
-import com.midas.midas_project.domain.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Comment;
 import org.modelmapper.ModelMapper;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter

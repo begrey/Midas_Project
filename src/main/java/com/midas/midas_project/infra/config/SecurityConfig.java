@@ -16,6 +16,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PERMIT_URL_ARRAY = {
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
     private final JwtTokenProvider jwtTokenProvider;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/users/logout").access("hasRole('ROLE_MASTER')")
 //                .antMatchers(HttpMethod.POST,"/user/**").access("hasRole('ROLE_MASTER')")
                 .antMatchers("/users/login").permitAll()
+                .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 .anyRequest().access("@authorizationChecker.check(request, authentication)")
                 .and()
                 .cors()
