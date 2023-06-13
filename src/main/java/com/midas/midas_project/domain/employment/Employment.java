@@ -22,7 +22,7 @@ public class Employment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employment_id")
     @Comment("채용공고 아이디")
-    private long employmentId;
+    private Long employmentId;
 
     @Column(name = "position", nullable = false, length = 20)
     @Comment("모집부문")

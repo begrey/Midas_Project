@@ -21,7 +21,7 @@ public class BuildCase extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "build_case_id")
     @Comment("구축 사례 아이디")
-    private long buildCaseId;
+    private Long buildCaseId;
 
     @Column(name = "build_case_name", nullable = false, length = 12)
     @Comment("사례 이름")

@@ -17,7 +17,7 @@ import java.util.List;
 @Tag(name = "구축사례 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/build-case")
+@RequestMapping(value = "/build-case/{category}")
 public class BuildCaseController {
     private final BuildCaseService buildCaseService;
     private final BuildCaseFileService buildCaseFileService;

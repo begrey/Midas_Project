@@ -15,9 +15,6 @@ public enum LoginType {
         this.code = code;
         this.isSuccess = isSuccess;
     }
-    public String returnCode() {
-        return code;
-    }
 
 
 }

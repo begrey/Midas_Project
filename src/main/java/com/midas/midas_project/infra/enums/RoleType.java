@@ -2,6 +2,11 @@ package com.midas.midas_project.infra.enums;
 
 import lombok.Getter;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Getter
 public enum RoleType {
     ROLE_ADMIN("ADMIN", "/admin/**"),
@@ -13,6 +18,12 @@ public enum RoleType {
 
     private String role;
     private String url;
+
+    private static final Map<String, String> ROLE_MAP = Collections.unmodifiableMap(
+            Stream.of(values()).collect(Collectors.toMap(RoleType::getRole, RoleType::name)));
+    public static RoleType of(final String role) {
+        return RoleType.valueOf(ROLE_MAP.get(role));
+    }
 
     RoleType(String role, String url) {
         this.role = role;

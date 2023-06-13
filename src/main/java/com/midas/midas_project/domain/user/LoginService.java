@@ -26,7 +26,7 @@ public class LoginService {
         if (user == null) {
             throw new IllegalArgumentException("회원이 존재하지 않음");
         }
-        String token = jwtTokenProvider.generateToken(user.getMidasUserId(), user.getPassword(), user.getRole());
+        String token = jwtTokenProvider.generateToken(user.getMidasUserId(), user.getPassword(), user.getAdminType().name());
         return new LoginResponseDto(token, user.getMidasUserId());
     }
 }

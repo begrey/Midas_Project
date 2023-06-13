@@ -72,11 +72,6 @@ public class UserService {
     //User 리스트 조회
     public List<UserResponseDto> selectUserList(Pageable pageable) {
         Page<User> userList = userRepository.findAll(pageable);
-//        List<UserResponseDto> dtos = new ArrayList<>();
-//        for (User user : userList) {
-//            List<UserRole> userRoles = userRoleRepository.findByUserUserId(user.getUserId());
-//            dtos.add(UserResponseDto.toDto(user, userRoles, modelMapper));
-//        }
         return userList.stream()
                 .map(user -> UserResponseDto.toDto(user, userRoleRepository.findByUserUserId(user.getUserId()), modelMapper)).toList();
     }

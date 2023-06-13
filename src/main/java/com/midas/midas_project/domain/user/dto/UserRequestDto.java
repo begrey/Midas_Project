@@ -2,6 +2,7 @@ package com.midas.midas_project.domain.user.dto;
 
 import com.midas.midas_project.domain.user.User;
 import com.midas.midas_project.domain.user.UserRole;
+import com.midas.midas_project.infra.enums.AdminType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.util.List;
 @Schema(description = "관리자 관리 요청 객체")
 public class UserRequestDto {
 
-    @Builder
+//    @Builder
     @Getter
     public static class Post {
         private String userName;
@@ -22,7 +23,7 @@ public class UserRequestDto {
         private String team;
         private String password;
         private String phone;
-        private String role;
+        private AdminType adminType;
         List<String> userRoles; // 차후에 ENUM을 통해 role 관리
 
         public User toEntity() {
@@ -32,11 +33,11 @@ public class UserRequestDto {
                     .team(this.team)
                     .password(this.password)
                     .phone(this.phone)
-                    .role(this.role)
+                    .adminType(this.adminType)
                     .build();
         }
     }
-    @Builder
+
     @Getter
     public static class Put {
         private String userName;
@@ -44,7 +45,7 @@ public class UserRequestDto {
         private String team;
         private String password;
         private String phone;
-        private String role;
+        private AdminType adminType;
         List<String> userRoles; // 차후에 ENUM을 통해 role 관리
 
     }

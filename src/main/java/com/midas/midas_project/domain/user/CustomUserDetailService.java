@@ -19,9 +19,6 @@ public class CustomUserDetailService implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException(midasUserId);
         }
-        //userDetail을 default로 사용할때
-//        return new User(person.get(0).getId(), person.get(0).getPassword(), "ROLE_USER");
-
         return new CustomUserDetail(user);
     }
 }

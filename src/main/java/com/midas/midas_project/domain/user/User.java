@@ -2,6 +2,7 @@ package com.midas.midas_project.domain.user;
 
 import com.midas.midas_project.domain.user.dto.UserRequestDto;
 import com.midas.midas_project.domain.user.dto.UserResponseDto;
+import com.midas.midas_project.infra.enums.AdminType;
 import com.midas.midas_project.model.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -27,7 +28,7 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     @Comment("유저 아이디")
-    private long userId;
+    private Long userId;
 
     @Column(name = "midas_user_id", nullable = false, length = 12)
     @Comment("유저 가입 아이디")
@@ -49,9 +50,10 @@ public class User extends BaseEntity {
     @Comment("연락처")
     private String phone;
 
-    @Column(name = "role", length = 20)
+    @Column(name = "admin_type", length = 20)
     @Comment("권한")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private AdminType adminType;
 
     @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -67,7 +69,7 @@ public class User extends BaseEntity {
     public User update(UserRequestDto.Put update) {
         this.team = update.getTeam();
         this.phone = update.getPhone();
-        this.role = update.getRole();
+        this.adminType = update.getAdminType();
         this.userName = update.getUserName();
         return this;
     }

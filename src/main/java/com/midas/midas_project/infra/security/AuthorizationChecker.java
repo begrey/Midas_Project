@@ -15,14 +15,10 @@ import java.util.List;
 public class AuthorizationChecker {
 
     public boolean check(HttpServletRequest request, Authentication authentication) {
-//        Object principalObj = authentication.getPrincipal();
-//        UserDetails userDetails = (UserDetails) principalObj;
-
         List<String> roleUrlList = (List<String>) authentication.getCredentials();
         for(String url : roleUrlList) {
-            log.info(url + "   :::   " + request.getRequestURI());
-            log.info(RoleType.ROLE_ADMIN.getRole());
-            if (new AntPathMatcher().match(url, request.getRequestURI())) {
+            log.info(RoleType.of(url).getUrl() + "   :::   " + request.getRequestURI());
+            if (new AntPathMatcher().match(RoleType.of(url).getUrl(), request.getRequestURI())) {
                 return true;
             }
         }
