@@ -30,15 +30,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private static final String JWT_PREFIX = "Bearer ";
 
+    /*
+        JWT 토큰 및 인증 객체 검증
+     */
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveTokenFromHeader(request);
         if (StringUtils.hasText(token)) {   // token 검증
             try {
-                String userId = jwtTokenProvider.getUsernameFromToken(token);
-                Authentication auth = jwtTokenProvider.getAuthentication(token);    // 인증 객체 생성
-                //auth.getAuthorities().stream().forEach(grantedAuthority -> System.out.println(grantedAuthority));
-                SecurityContextHolder.getContext().setAuthentication(auth); // SecurityContextHolder에 인증 객체 저장
+                jwtTokenProvider.validateToken(token);
+                Authentication auth = jwtTokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
             } catch (ExpiredJwtException expiredJwtException) {
                 request.setAttribute("exception", ErrorType.EXPIRED_TOKEN);
             } catch (UnsupportedJwtException unsupportedJwtException) {
@@ -48,6 +51,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (UsernameNotFoundException usernameNotFoundException) {
                 request.setAttribute("exception", ErrorType.NOT_FOUND_USER);
             }
+        } else {
+            request.setAttribute("exception", ErrorType.NOT_FOUND_TOKEN);
         }
         filterChain.doFilter(request, response);
     }

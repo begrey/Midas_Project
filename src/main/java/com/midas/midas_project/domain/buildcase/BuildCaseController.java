@@ -21,14 +21,6 @@ import java.util.List;
 public class BuildCaseController {
     private final BuildCaseService buildCaseService;
     private final BuildCaseFileService buildCaseFileService;
-
-    @PostMapping(value = "/test",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void test(@RequestPart BuildcaseRequestDto.Post post) {
-        System.out.println(post.getBuildCaseName());
-        for(BuildcaseRequestDto.BuildCaseTableDto table : post.getTables()) {
-            System.out.println(table.getTitle() + " " + table.getContent());
-        }
-    }
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BuildcaseResponseDto createBuildCase(@RequestPart BuildcaseRequestDto.Post post,
                                                  @RequestPart(required = true, value = "thumbnail") MultipartFile thumbnail,

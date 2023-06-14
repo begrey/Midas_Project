@@ -1,10 +1,7 @@
 package com.midas.midas_project.infra.security;
 
 import com.midas.midas_project.domain.user.*;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,15 +22,13 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private static final long serialVersionUID = -2550185165626007488L;
+//    private static final long serialVersionUID = -2550185165626007488L;
 
     public static final long JWT_TOKEN_VALIDITY = 2 * 60 * 60;
 
     private final CustomUserDetailService userDetailService;
 
     private final UserRepository userRepository;
-
-    private final UserRoleRepository userRoleRepository;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -42,10 +38,8 @@ public class JwtTokenProvider {
         return getClaimFromToken(token, Claims::getSubject);
     }
     // 토큰 검증하기
-    public String validateToken(String token) {
-        String userId = getClaimFromToken(token, Claims::getSubject);
-        System.out.println("@@@검증 추가해야함 " + userId);
-        return getClaimFromToken(token, Claims::getSubject);
+    public void validateToken(String token) {
+        getClaimFromToken(token, Claims::getSubject);
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -61,15 +55,16 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setSubject(userId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1))//JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
     // JWT 토큰에서 인증 정보 조회
+    @Transactional
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailService.loadUserByUsername(this.getUsernameFromToken(token));
         User user = userRepository.findByMidasUserIdAndPassword(userDetails.getUsername(), userDetails.getPassword());
-        List<String> userRoleList = userRoleRepository.findByUserUserId(user.getUserId()).stream().map(role -> role.getUrl()).toList();
+        List<String> userRoleList = user.getUserRoles().stream().map(role -> role.getUrl()).toList();
         return new UsernamePasswordAuthenticationToken(userDetails, userRoleList, userDetails.getAuthorities());
     }
 
